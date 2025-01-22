@@ -264,6 +264,25 @@
         .theme-toggle-float:active {
             transform: translateY(0);
         }
+
+        .nav-button {
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.2s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-1px);
+        }
+
+        .nav-button:active {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body>
@@ -271,6 +290,9 @@
         <div class="logo">
             🍪 Tek Cookie Converter
         </div>
+        <a href="liteTek.html" class="nav-button">
+            LiteTek
+        </a>
     </nav>
 
     <div class="container">
