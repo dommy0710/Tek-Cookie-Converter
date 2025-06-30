@@ -1,339 +1,393 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Email List Cleaner</title>
-  <style>
-    :root {
-      --bg-color: #1a1a1a;
-      --card-bg: #2d2d2d;
-      --input-bg: #242424;
-      --border: #404040;
-      --text: #ffffff;
-      --text-secondary: #b3b3b3;
-      --accent: #00b0ff;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email List Cleaner</title>
+    <style>
+        /* Core theme */
+        :root {
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --input-bg: #242424;
+            --border: #404040;
+            --text: #ffffff;
+            --text-secondary: #b3b3b3;
+            --accent: #00b0ff;
+        }
 
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      background: var(--bg-color);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-      padding: 20px;
-      line-height: 1.6;
-    }
+        body {
+            background: var(--bg-color);
+            color: var(--text);
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            line-height: 1.6;
+        }
 
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: grid;
-      grid-template-columns: 300px 1fr;
-      gap: 20px;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+        }
 
-    .sidebar {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 8px;
-      height: fit-content;
-    }
+        /* Sidebar styles */
+        .sidebar {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            height: fit-content;
+        }
 
-    .keyword-section {
-      margin-bottom: 20px;
-    }
+        .keyword-section {
+            margin-bottom: 20px;
+        }
 
-    .keyword-section h3 {
-      margin-bottom: 10px;
-    }
+        .keyword-section h3 {
+            margin-bottom: 10px;
+            color: var(--text);
+        }
 
-    .keyword-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 15px;
-    }
+        .keyword-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
 
-    .keyword {
-      background: var(--input-bg);
-      padding: 5px 10px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+        .keyword {
+            background: var(--input-bg);
+            color: var(--text);
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-    .keyword button {
-      background: none;
-      border: none;
-      color: var(--text-secondary);
-      cursor: pointer;
-    }
+        .keyword button {
+            background: none;
+            border: none;
+            color: var(--text-secondary);
+            cursor: pointer;
+            padding: 2px;
+        }
 
-    .main-content {
-      display: flex;
-      flex-direction: column;
-      gap: 20px;
-    }
+        .keyword button:hover {
+            color: var(--text);
+        }
 
-    .email-container {
-      background: var(--card-bg);
-      padding: 20px;
-      border-radius: 8px;
-    }
+        /* Main content styles */
+        .main-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
 
-    .email-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 10px;
-    }
+        .email-container {
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+        }
 
-    textarea {
-      width: 100%;
-      height: 200px;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text);
-      padding: 10px;
-      resize: vertical;
-    }
+        .email-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
 
-    button {
-      background: var(--accent);
-      color: var(--text);
-      border: none;
-      padding: 8px 16px;
-      border-radius: 4px;
-      cursor: pointer;
-    }
+        textarea {
+            width: 100%;
+            height: 200px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            padding: 10px;
+            font-family: inherit;
+            resize: vertical;
+        }
 
-    #addKeyword {
-      width: 100%;
-      padding: 8px;
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      color: var(--text);
-      margin-bottom: 10px;
-    }
+        button {
+            background: var(--accent);
+            color: var(--text);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 10px;
-      margin-top: 20px;
-    }
+        button:hover {
+            opacity: 0.9;
+        }
 
-    .stat-card {
-      background: var(--card-bg);
-      padding: 15px;
-      border-radius: 4px;
-      text-align: center;
-    }
+        #addKeyword {
+            width: 100%;
+            padding: 8px;
+            background: var(--input-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            color: var(--text);
+            margin-bottom: 10px;
+        }
 
-    .stat-value {
-      font-size: 24px;
-      font-weight: bold;
-      color: var(--accent);
-    }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
 
-    .stat-label {
-      color: var(--text-secondary);
-      font-size: 14px;
-    }
-  </style>
+        .stat-card {
+            background: var(--card-bg);
+            padding: 15px;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--accent);
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <div class="keyword-section">
-        <h3>Preset Keywords</h3>
-        <div id="presetKeywords" class="keyword-list"></div>
-      </div>
-      <div class="keyword-section">
-        <h3>Custom Keywords</h3>
-        <input type="text" id="addKeyword" placeholder="Add new keyword and press Enter">
-        <div id="customKeywords" class="keyword-list"></div>
-      </div>
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <div class="keyword-section">
+                <h3>Preset Keywords</h3>
+                <div id="presetKeywords" class="keyword-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+
+            <div class="keyword-section">
+                <h3>Custom Keywords</h3>
+                <input type="text" id="addKeyword" placeholder="Add new keyword and press Enter">
+                <div id="customKeywords" class="keyword-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="email-container">
+                <div class="email-header">
+                    <h3>Input Emails</h3>
+                    <button id="processBtn">Process Emails</button>
+                </div>
+                <textarea id="inputEmails" placeholder="Paste your email list here (one email per line)"></textarea>
+            </div>
+
+            <div class="email-container">
+                <div class="email-header">
+                    <h3>Clean Emails</h3>
+                    <button id="copyBtn">Copy Results</button>
+                </div>
+                <textarea id="outputEmails" readonly placeholder="Clean emails will appear here"></textarea>
+            </div>
+
+            <div class="email-container">
+                <div class="email-header">
+                    <h3>Filtered Emails</h3>
+                    <button id="copyFilteredBtn">Copy Filtered</button>
+                </div>
+                <textarea id="filteredEmails" readonly placeholder="Filtered emails will appear here"></textarea>
+            </div>
+
+            <div class="email-container">
+                <div class="email-header">
+                    <h3>Base64 Encoded (Clean Emails)</h3>
+                    <div style="display: flex; gap: 10px;">
+                        <button id="encodeBtn">Encode to Base64</button>
+                        <button id="copyBase64Btn">Copy Base64</button>
+                    </div>
+                </div>
+                <textarea id="base64Emails" readonly placeholder="Base64 encoded clean emails will appear here"></textarea>
+            </div>
+
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="stat-value" id="totalCount">0</div>
+                    <div class="stat-label">Total Emails</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="cleanCount">0</div>
+                    <div class="stat-label">Clean Emails</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-value" id="filteredCount">0</div>
+                    <div class="stat-label">Filtered Emails</div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div class="main-content">
-      <div class="email-container">
-        <div class="email-header">
-          <h3>Input Emails</h3>
-          <button id="processBtn">Process Emails</button>
-        </div>
-        <textarea id="inputEmails" placeholder="Paste your email list here (one per line)"></textarea>
-      </div>
+    <script>
+        // Core functionality
+        const presetKeywords = new Set([
+            'info', 'support', 'help', 'sales', 'contact',
+            'admin', 'billing', 'noreply', 'no-reply', 'marketing',
+            'newsletter', 'notifications', 'updates', 'team',
+            'service', 'account', 'security', 'alert', 'system',
+            'automated', 'donotreply', 'do-not-reply'
+        ]);
 
-      <div class="email-container">
-        <div class="email-header">
-          <h3>Clean Emails</h3>
-          <button id="copyBtn">Copy Results</button>
-        </div>
-        <textarea id="outputEmails" readonly></textarea>
-      </div>
+        const customKeywords = new Set();
 
-      <div class="email-container">
-        <div class="email-header">
-          <h3>Filtered Emails</h3>
-          <button id="copyFilteredBtn">Copy Filtered</button>
-        </div>
-        <textarea id="filteredEmails" readonly></textarea>
-      </div>
+        // DOM Elements
+        const elements = {
+            presetKeywords: document.getElementById('presetKeywords'),
+            customKeywords: document.getElementById('customKeywords'),
+            addKeyword: document.getElementById('addKeyword'),
+            inputEmails: document.getElementById('inputEmails'),
+            outputEmails: document.getElementById('outputEmails'),
+            filteredEmails: document.getElementById('filteredEmails'),
+            processBtn: document.getElementById('processBtn'),
+            copyBtn: document.getElementById('copyBtn'),
+            copyFilteredBtn: document.getElementById('copyFilteredBtn'),
+            totalCount: document.getElementById('totalCount'),
+            cleanCount: document.getElementById('cleanCount'),
+            filteredCount: document.getElementById('filteredCount'),
+            base64Emails: document.getElementById('base64Emails'),
+            encodeBtn: document.getElementById('encodeBtn'),
+            copyBase64Btn: document.getElementById('copyBase64Btn')
+        };
 
-      <div class="email-container">
-        <div class="email-header">
-          <h3>Base64 Encoded (Clean Emails)</h3>
-          <div style="display: flex; gap: 10px;">
-            <button id="encodeBtn">Encode to Base64</button>
-            <button id="copyBase64Btn">Copy Base64</button>
-          </div>
-        </div>
-        <textarea id="base64Emails" readonly></textarea>
-      </div>
+        // Render keywords
+        function renderKeywords() {
+            // Render preset keywords
+            elements.presetKeywords.innerHTML = Array.from(presetKeywords)
+                .map(keyword => 
+                    <div class="keyword">
+                        ${keyword}
+                        <button onclick="removePresetKeyword('${keyword}')">×</button>
+                    </div>
+                ).join('');
 
-      <div class="stats">
-        <div class="stat-card">
-          <div class="stat-value" id="totalCount">0</div>
-          <div class="stat-label">Total Emails</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="cleanCount">0</div>
-          <div class="stat-label">Clean Emails</div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-value" id="filteredCount">0</div>
-          <div class="stat-label">Filtered Emails</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    const presetKeywords = new Set([
-      'info', 'support', 'help', 'sales', 'contact', 'admin', 'billing',
-      'noreply', 'no-reply', 'marketing', 'newsletter', 'notifications',
-      'updates', 'team', 'service', 'account', 'security', 'alert',
-      'system', 'automated', 'donotreply', 'do-not-reply'
-    ]);
-
-    const customKeywords = new Set();
-
-    const elements = {
-      presetKeywords: document.getElementById('presetKeywords'),
-      customKeywords: document.getElementById('customKeywords'),
-      addKeyword: document.getElementById('addKeyword'),
-      inputEmails: document.getElementById('inputEmails'),
-      outputEmails: document.getElementById('outputEmails'),
-      filteredEmails: document.getElementById('filteredEmails'),
-      processBtn: document.getElementById('processBtn'),
-      copyBtn: document.getElementById('copyBtn'),
-      copyFilteredBtn: document.getElementById('copyFilteredBtn'),
-      totalCount: document.getElementById('totalCount'),
-      cleanCount: document.getElementById('cleanCount'),
-      filteredCount: document.getElementById('filteredCount'),
-      base64Emails: document.getElementById('base64Emails'),
-      encodeBtn: document.getElementById('encodeBtn'),
-      copyBase64Btn: document.getElementById('copyBase64Btn')
-    };
-
-    function renderKeywords() {
-      elements.presetKeywords.innerHTML = Array.from(presetKeywords)
-        .map(k => `<div class="keyword">${k}<button onclick="removePresetKeyword('${k}')">×</button></div>`).join('');
-      elements.customKeywords.innerHTML = Array.from(customKeywords)
-        .map(k => `<div class="keyword">${k}<button onclick="removeCustomKeyword('${k}')">×</button></div>`).join('');
-    }
-
-    function removePresetKeyword(k) {
-      presetKeywords.delete(k);
-      renderKeywords();
-    }
-
-    function removeCustomKeyword(k) {
-      customKeywords.delete(k);
-      renderKeywords();
-    }
-
-    elements.addKeyword.addEventListener('keypress', e => {
-      if (e.key === 'Enter') {
-        const k = e.target.value.trim().toLowerCase();
-        if (k && !customKeywords.has(k) && !presetKeywords.has(k)) {
-          customKeywords.add(k);
-          renderKeywords();
-          e.target.value = '';
-          processEmails();
+            // Render custom keywords
+            elements.customKeywords.innerHTML = Array.from(customKeywords)
+                .map(keyword => 
+                    <div class="keyword">
+                        ${keyword}
+                        <button onclick="removeCustomKeyword('${keyword}')">×</button>
+                    </div>
+                ).join('');
         }
-      }
-    });
 
-    function processEmails() {
-      let emails = elements.inputEmails.value
-        .split(/[\n,]+/)
-        .map(e => e.trim().toLowerCase())
-        .filter(e => e);
-
-      const uniqueEmails = Array.from(new Set(emails));
-      const allKeywords = [...presetKeywords, ...customKeywords].map(k => k.toLowerCase());
-
-      const clean = [];
-      const filtered = [];
-
-      uniqueEmails.forEach(email => {
-        const isFiltered = allKeywords.some(k => email.includes(k));
-        isFiltered ? filtered.push(email) : clean.push(email);
-      });
-
-      elements.inputEmails.value = uniqueEmails.map((e, i) => `${i + 1}. ${e}`).join('\n');
-      elements.outputEmails.value = clean.map((e, i) => `${i + 1}. ${e}`).join('\n');
-      elements.filteredEmails.value = filtered.map((e, i) => `${i + 1}. ${e}`).join('\n');
-
-      elements.totalCount.textContent = uniqueEmails.length;
-      elements.cleanCount.textContent = clean.length;
-      elements.filteredCount.textContent = filtered.length;
-
-      encodeToBase64(clean);
-    }
-
-    function encodeToBase64(clean = []) {
-      if (clean.length === 0) {
-        clean = elements.outputEmails.value
-          .split('\n')
-          .map(e => e.replace(/^\d+\.\s*/, '').trim())
-          .filter(e => e);
-      }
-
-      const encoded = clean.map((e, i) => {
-        try {
-          return `${i + 1}. ${btoa(e)}`;
-        } catch {
-          return `${i + 1}. Error encoding: ${e}`;
+        // Keyword management
+        function removePresetKeyword(keyword) {
+            presetKeywords.delete(keyword);
+            renderKeywords();
         }
-      });
 
-      elements.base64Emails.value = encoded.join('\n');
-    }
+        function removeCustomKeyword(keyword) {
+            customKeywords.delete(keyword);
+            renderKeywords();
+        }
 
-    function copyToClipboard(text) {
-      navigator.clipboard.writeText(text).catch(err => {
-        console.error('Failed to copy:', err);
-      });
-    }
+        elements.addKeyword.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                const keyword = e.target.value.trim().toLowerCase();
+                if (keyword && !customKeywords.has(keyword) && !presetKeywords.has(keyword)) {
+                    customKeywords.add(keyword);
+                    renderKeywords();
+                    e.target.value = '';
+                    // Automatically process emails when a new keyword is added
+                    processEmails();
+                }
+            }
+        });
 
-    elements.processBtn.addEventListener('click', processEmails);
-    elements.copyBtn.addEventListener('click', () => copyToClipboard(elements.outputEmails.value));
-    elements.copyFilteredBtn.addEventListener('click', () => copyToClipboard(elements.filteredEmails.value));
-    elements.encodeBtn.addEventListener('click', () => encodeToBase64());
-    elements.copyBase64Btn.addEventListener('click', () => copyToClipboard(elements.base64Emails.value));
+        // Process emails
+        function processEmails() {
+            // Get all emails and normalize them
+            const emails = elements.inputEmails.value
+                .split(/[\n,]+/)
+                .map(e => e.trim().toLowerCase())
+                .filter(e => e);
 
-    renderKeywords();
-  </script>
+            const results = {
+                clean: [],
+                filtered: []
+            };
+
+            // Combine all keywords and ensure they're lowercase
+            const allKeywords = [...presetKeywords, ...customKeywords].map(k => k.toLowerCase());
+
+            emails.forEach(email => {
+                // Check the entire email address against each keyword
+                const shouldFilter = allKeywords.some(keyword => 
+                    email.toLowerCase().includes(keyword.toLowerCase())
+                );
+
+                if (shouldFilter) {
+                    results.filtered.push(email);
+                } else {
+                    results.clean.push(email);
+                }
+            });
+
+            // Update outputs
+            elements.outputEmails.value = results.clean.join('\n');
+            elements.filteredEmails.value = results.filtered.join('\n');
+            
+            // Automatically encode clean emails to base64
+            encodeToBase64();
+
+            // Update stats
+            elements.totalCount.textContent = emails.length;
+            elements.cleanCount.textContent = results.clean.length;
+            elements.filteredCount.textContent = results.filtered.length;
+        }
+
+        // Copy functionality
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).catch(err => {
+                console.error('Failed to copy:', err);
+            });
+        }
+
+        // Event listeners
+        elements.processBtn.addEventListener('click', processEmails);
+        elements.copyBtn.addEventListener('click', () => copyToClipboard(elements.outputEmails.value));
+        elements.copyFilteredBtn.addEventListener('click', () => copyToClipboard(elements.filteredEmails.value));
+
+        // Base64 encoding function
+        function encodeToBase64() {
+            const cleanEmails = elements.outputEmails.value.split('\n').filter(email => email.trim());
+            const base64Emails = cleanEmails.map(email => {
+                try {
+                    return btoa(email);
+                } catch (e) {
+                    return Error encoding: ${email};
+                }
+            });
+            elements.base64Emails.value = base64Emails.join('\n');
+        }
+
+        // Add event listeners
+        elements.encodeBtn.addEventListener('click', encodeToBase64);
+        elements.copyBase64Btn.addEventListener('click', () => copyToClipboard(elements.base64Emails.value));
+
+        // Initial render
+        renderKeywords();
+    </script>
 </body>
 </html>
